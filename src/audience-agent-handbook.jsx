@@ -466,6 +466,160 @@ const AudienceAgentHandbook = () => {
         }
       },
       footer: "Para cualquier soporte contacta a Tushar - Forward Deployed Engineering"
+    },
+    ja: {
+      title: "オーディエンスエージェントプロンプトガイド",
+      subtitle: "セグメント作成と分析のベストプラクティス",
+      company: "ネスレ メキシコ",
+      toggle: "言語",
+      toc: {
+        title: "目次",
+        items: [
+          { id: 'intro', label: 'はじめに' },
+          { id: 'section1', label: '1. シンプルに始める' },
+          { id: 'section2', label: '2. ルールを追加' },
+          { id: 'section3', label: '3. 複雑なルール' },
+          { id: 'section4', label: '4. テキストマッチング' },
+          { id: 'section5', label: '5. インサイト' },
+          { id: 'quickref', label: 'クイックリファレンス' },
+          { id: 'quiz', label: 'スキルをテスト' }
+        ]
+      },
+      sections: {
+        intro: {
+          title: "はじめに",
+          text: "オーディエンスエージェントは、ユーザーデータセグメントを分析し、新しいターゲットセグメントを作成するための強力なツールです。このガイドは、その機能を最大限に活用するための効果的なプロンプトの作成方法を説明します。"
+        },
+        startSmall: {
+          title: "1. シンプルなセグメントルールから始める",
+          description: "複雑さを追加する前に、基本的な単一条件のセグメントから始めましょう。",
+          why: "重要な理由：",
+          reasons: [
+            "結果の検証とセグメントの動作理解が容易",
+            "処理が高速で、より明確なインサイトが得られる",
+            "反復的な改善のための強固な基盤を提供"
+          ],
+          goodExample: {
+            title: "良いプロンプトの例",
+            prompt: "過去30日間にネスカフェ製品を購入したユーザーのセグメントを作成してください。",
+            explanation: "明確で、具体的な期間、単一の製品カテゴリー、1つの条件。"
+          },
+          badExample: {
+            title: "避けるべきアプローチ",
+            prompt: "コーヒーに興味があるかもしれない人、最近何か購入した人、またはウェブサイトを訪問した人を表示してください。",
+            explanation: "曖昧すぎる、複数の不明確な条件、具体的な基準がない。"
+          }
+        },
+        addRules: {
+          title: "2. 段階的にルールを追加",
+          description: "基本的なセグメントが機能したら、戦略的に追加条件をレイヤー化します。",
+          approach: "推奨されるアプローチ：",
+          steps: [
+            "コアとなる定義基準から始める",
+            "初期セグメントをテストして検証",
+            "一度に1つの追加ルールを追加",
+            "各追加後に検証して影響を追跡"
+          ],
+          goodExample: {
+            title: "良い段階的プロンプト",
+            prompt: "ネスカフェ購入者セグメントを改良して、次の条件をすべて満たすユーザーのみを含めます：(1) 過去30日間に購入、かつ (2) 合計$500 MXN以上を支出、かつ (3) メキシコシティに所在。",
+            explanation: "明確な進行、番号付き条件、論理的なAND関係。"
+          },
+          badExample: {
+            title: "避けるべきアプローチ",
+            prompt: "より多く購入し、価値のある優良顧客を見つけるために、さらにフィルターを追加してください。",
+            explanation: "具体的な基準がない、曖昧な修飾語、「優良」の意味が不明確。"
+          }
+        },
+        complexRules: {
+          title: "3. 複数条件の処理（AND/ORロジック）",
+          description: "セグメントに複雑なロジックが必要な場合は、プロンプトを明確に構造化します。",
+          bestPractices: "ベストプラクティス：",
+          tips: [
+            "AND/OR関係を明示的に記述",
+            "複数の条件には番号付きリストを使用",
+            "関連する条件は括弧でグループ化",
+            "AND/ORを混在させる際は優先順位を明確に"
+          ],
+          goodExample: {
+            title: "良い複雑なプロンプト",
+            prompt: "次のすべての基準を満たすユーザーのセグメントを作成：\n1. 過去60日間に（ネスカフェ または キットカット または マギー）を購入\n2. 生涯合計支出 > $1000 MXN\n3. （CDMX または グアダラハラ または モンテレー）に所在\n4. 年齢25〜45歳",
+            explanation: "明確な構造、明示的なAND/OR演算子、整理された条件、具体的な値。"
+          },
+          badExample: {
+            title: "避けるべきアプローチ",
+            prompt: "ネスカフェまたは多分キットカットを購入し、お金を使い、大都市に住んでいるか適切な年齢のユーザーを取得してください。",
+            explanation: "曖昧なロジック、不明確なAND/OR関係、曖昧な数量。"
+          }
+        },
+        stringMatching: {
+          title: "4. フィルターのテキストマッチング使用",
+          description: "メール、場所、製品名などのテキストフィールドでフィルタリングする場合は、探しているものを明確にします。",
+          guidelines: "ガイドライン：",
+          rules: [
+            "完全一致と部分一致のどちらが必要かを指定",
+            "メールフィルタリングの場合、ドメインまたはプロバイダーを記載",
+            "場所の場合、都市、州、地域のどれが必要かを指定",
+            "製品名を参照する場合は、できるだけ具体的に"
+          ],
+          goodExample: {
+            title: "良いテキストマッチングプロンプト",
+            prompt: "GmailまたはHotmailのメールアドレスを持ち、200gのネスカフェ クラシコを購入し、グアダラハラまたはその周辺に住むユーザーのセグメントを作成してください。",
+            explanation: "メールドメインについての明確な意図、サイズ付きの具体的な製品、柔軟な場所マッチング（「周辺」）。エージェントは「Gmail」を「@gmail.com」と、「グアダラハラ周辺」を都市圏として解釈できます。"
+          },
+          badExample: {
+            title: "避けるべきアプローチ",
+            prompt: "メールアドレスを持ち、いくつかの大都市でコーヒー製品を購入した人を見つけてください。",
+            explanation: "具体的なメール基準がない、曖昧な製品参照（「コーヒー製品」）、未定義の都市。"
+          }
+        },
+        insights: {
+          title: "5. セグメントインサイトのリクエスト",
+          description: "既存のセグメントを分析する際は、必要なインサイトについて具体的に記述します。",
+          tips: "効果的なインサイトリクエスト：",
+          points: [
+            "分析したいメトリクスを指定",
+            "必要に応じて比較グループを定義",
+            "分析の明確な期間を設定",
+            "実行可能な推奨事項を依頼"
+          ],
+          goodExample: {
+            title: "良いインサイトプロンプト",
+            prompt: "「高価値コーヒー購入者」セグメントを分析し、次を提供してください：\n1. 過去90日間の平均購入頻度\n2. このセグメント内の最も人気のある製品\n3. メキシコ全体での地理的分布\n4. 全体的な顧客ベースとの比較\n5. ターゲットキャンペーンのための推奨事項",
+            explanation: "具体的なメトリクスが要求され、明確な期間、構造化された形式、実行可能なインサイトを求める。"
+          },
+          badExample: {
+            title: "避けるべきアプローチ",
+            prompt: "コーヒーセグメントについて教えてください、そして私たちが知るべきことは何ですか。",
+            explanation: "具体的なメトリクスがない、期間がない、曖昧すぎる、必要な情報が不明確。"
+          }
+        },
+        quickReference: {
+          title: "クイックリファレンス：プロンプト構造テンプレート",
+          template: [
+            "目的を明確に述べる（セグメント作成/セグメント分析）",
+            "明示的な演算子でコア基準を定義（AND/OR/CONTAINS/EQUALS）",
+            "複数条件には番号付きリストを使用",
+            "定量的閾値を正確に指定",
+            "関連する場合は期間を含める",
+            "インサイトの場合：必要な具体的メトリクスをリスト"
+          ]
+        },
+        quiz: {
+          title: "プロンプトスキルをテスト",
+          subtitle: "以下にプロンプトを入力して、品質に関する即座のフィードバックを取得",
+          placeholder: "例：過去30日間にネスカフェを購入したユーザーのセグメントを作成...",
+          buttonText: "プロンプトを分析",
+          analyzing: "分析中...",
+          scoreLabel: "プロンプト品質スコア",
+          strengthsLabel: "強み",
+          improvementsLabel: "改善領域",
+          noStrengths: "具体的な強みが検出されませんでした。明確な目的、期間、具体的な基準を含めてみてください。",
+          noImprovements: "素晴らしいプロンプトです！大きな改善は不要です。",
+          tryAnother: "練習のために別のプロンプトを試してみてください！"
+        }
+      },
+      footer: "サポートが必要な場合は Tushar - Forward Deployed Engineering までご連絡ください"
     }
   };
 
@@ -484,16 +638,44 @@ const AudienceAgentHandbook = () => {
             />
             <div className="h-8 w-px bg-slate-300"></div>
             <h1 className="text-xl font-semibold text-slate-900">
-              {language === 'en' ? 'Audience Agent Prompting Guide' : 'Guía de Prompts del Agente de Audiencias'}
+              {t.title}
             </h1>
           </div>
-          <button
-            onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
-            className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
-          >
-            <Globe size={18} />
-            {t.toggle}
-          </button>
+          <div className="flex items-center gap-2">
+            <Globe size={18} className="text-slate-600" />
+            <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
+              <button
+                onClick={() => setLanguage('en')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  language === 'en'
+                    ? 'bg-slate-900 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLanguage('es')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  language === 'es'
+                    ? 'bg-slate-900 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                ES
+              </button>
+              <button
+                onClick={() => setLanguage('ja')}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                  language === 'ja'
+                    ? 'bg-slate-900 text-white shadow-sm'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                日本語
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 
