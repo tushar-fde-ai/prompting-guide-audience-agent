@@ -68,14 +68,29 @@ const AudienceAgentHandbook = () => {
         positives.push(language === 'en' ? 'Multiple conditions defined' : 'Múltiples condiciones definidas');
       }
       
-      if (lowerPrompt.includes('nescafé') || lowerPrompt.includes('kitkat') || lowerPrompt.includes('maggi') || lowerPrompt.match(/product|producto/)) {
+      if (lowerPrompt.includes('jeep') || lowerPrompt.includes('ram') || lowerPrompt.includes('dodge') || lowerPrompt.includes('chrysler') || lowerPrompt.includes('fiat') || lowerPrompt.includes('alfa romeo') || lowerPrompt.includes('maserati') || lowerPrompt.includes('peugeot') || lowerPrompt.includes('citroën') || lowerPrompt.includes('opel') || lowerPrompt.includes('stellantis') || lowerPrompt.includes('brand') || lowerPrompt.includes('marca') || lowerPrompt.match(/vehicle|vehiculo|car|auto/)) {
         score += 5;
-        positives.push(language === 'en' ? 'Specific products mentioned' : 'Productos específicos mencionados');
+        positives.push(language === 'en' ? 'Specific brand/vehicle mentioned' : 'Marca/vehículo específico mencionado');
       }
-      
-      if (lowerPrompt.includes('email') || lowerPrompt.includes('correo') || lowerPrompt.includes('gmail') || lowerPrompt.includes('city') || lowerPrompt.includes('ciudad')) {
+
+      if (lowerPrompt.includes('opt-in') || lowerPrompt.includes('optin') || lowerPrompt.includes('test drive') || lowerPrompt.includes('prueba de manejo') || lowerPrompt.includes('lead') || lowerPrompt.includes('prospect') || lowerPrompt.includes('customer')) {
         score += 5;
-        positives.push(language === 'en' ? 'Relevant data fields identified' : 'Campos de datos relevantes identificados');
+        positives.push(language === 'en' ? 'Lead/prospect status referenced' : 'Estado de lead/prospecto referenciado');
+      }
+
+      if (lowerPrompt.includes('email') || lowerPrompt.includes('correo') || lowerPrompt.includes('website') || lowerPrompt.includes('sitio') || lowerPrompt.includes('click') || lowerPrompt.includes('open') || lowerPrompt.includes('abrir') || lowerPrompt.includes('dealership') || lowerPrompt.includes('concesionario')) {
+        score += 5;
+        positives.push(language === 'en' ? 'Channel/engagement metrics specified' : 'Métricas de canal/engagement especificadas');
+      }
+
+      if (lowerPrompt.includes('bar chart') || lowerPrompt.includes('pie chart') || lowerPrompt.includes('gráfico') || lowerPrompt.includes('table') || lowerPrompt.includes('tabla') || lowerPrompt.includes('x-axis') || lowerPrompt.includes('y-axis') || lowerPrompt.includes('eje')) {
+        score += 10;
+        positives.push(language === 'en' ? 'Visualization type and format specified' : 'Tipo y formato de visualización especificado');
+      }
+
+      if (lowerPrompt.includes('profile') || lowerPrompt.includes('perfil') || lowerPrompt.includes('enriched') || lowerPrompt.includes('enriquecido') || lowerPrompt.includes('purchase intent') || lowerPrompt.includes('intención de compra') || lowerPrompt.includes('vehicle preference') || lowerPrompt.includes('preferencia de vehículo')) {
+        score += 5;
+        positives.push(language === 'en' ? 'Profile/enriched data fields referenced' : 'Campos de datos de perfil/enriquecidos referenciados');
       }
       
       // Negative indicators
@@ -162,7 +177,7 @@ const AudienceAgentHandbook = () => {
     en: {
       title: "Audience Agent Prompting Guide",
       subtitle: "Best Practices for Segment Creation & Analysis",
-      company: "Nestlé Mexico",
+      company: "",
       toggle: "Español",
       toc: {
         title: "Table of Contents",
@@ -193,13 +208,13 @@ const AudienceAgentHandbook = () => {
           ],
           goodExample: {
             title: "Good Prompt Example",
-            prompt: "Create a segment of users who purchased Nescafé products in the last 30 days.",
-            explanation: "Clear, specific timeframe, single product category, one condition."
+            prompt: "Create a segment of customers who currently own a Jeep vehicle and have indicated interest in electric vehicles, based on their profile data.",
+            explanation: "Clear criteria targeting specific vehicle ownership and interest attributes. Single logical condition with two related profile fields."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Show me everyone who might be interested in coffee or bought something recently or visited the website.",
-            explanation: "Too vague, multiple unclear conditions, no specific criteria."
+            prompt: "Show me everyone who might be interested in cars or seems like they want a new vehicle.",
+            explanation: "Too vague, multiple unclear conditions, uses uncertain language like 'might be' and 'seems'."
           }
         },
         addRules: {
@@ -214,13 +229,13 @@ const AudienceAgentHandbook = () => {
           ],
           goodExample: {
             title: "Good Progressive Prompt",
-            prompt: "Refine the Nescafé purchasers segment to include only users who: (1) made a purchase in the last 30 days, AND (2) have spent more than $500 MXN total, AND (3) are located in Mexico City.",
-            explanation: "Clear progression, numbered conditions, logical AND relationship."
+            prompt: "Create a segment of high-intent Ram truck prospects where users meet ALL of these criteria: (1) have visited the Ram truck configurator page in the last 30 days, AND (2) have opened or clicked emails about truck promotions in the last 30 days, AND (3) have requested a test drive or dealer quote.",
+            explanation: "Clear progression, numbered conditions, explicit AND relationship, specific timeframes, defines 'high-intent' with measurable criteria."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Add more filters to find better customers who buy more and are valuable.",
-            explanation: "No specific criteria, vague qualifiers, unclear what 'better' means."
+            prompt: "Find users who are interested in trucks and active recently.",
+            explanation: "No specific criteria for 'interested' or 'active', no timeframes, vague qualifiers."
           }
         },
         complexRules: {
@@ -235,55 +250,55 @@ const AudienceAgentHandbook = () => {
           ],
           goodExample: {
             title: "Good Complex Prompt",
-            prompt: "Create a segment where users meet ALL of these criteria:\n1. Purchased (Nescafé OR KitKat OR Maggi) in last 60 days\n2. Total lifetime spend > $1000 MXN\n3. Located in (CDMX OR Guadalajara OR Monterrey)\n4. Age between 25-45 years",
-            explanation: "Clear structure, explicit AND/OR operators, organized conditions, specific values."
+            prompt: "Create an audience segment of customers interested in electric vehicles where users meet ANY of these criteria:\n1. Have indicated they own a hybrid or EV in their profile, OR\n2. Have visited the Jeep 4xe or Fiat 500e pages on the website, OR\n3. Have selected 'sustainability' or 'EV' in their 'Vehicle Preferences' survey responses.\nAND all users must be within 50 miles of a Stellantis dealership.",
+            explanation: "Clear structure with explicit OR conditions grouped together, final AND condition clearly separated, references specific data sources (profile, web visits, survey)."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Get users who bought Nescafé or maybe KitKat and spent money and live in major cities or are the right age.",
-            explanation: "Ambiguous logic, unclear AND/OR relationships, vague quantities."
+            prompt: "Find people who like electric cars or might be interested in eco-friendly vehicles.",
+            explanation: "Ambiguous logic, unclear data sources, uses uncertain language like 'might be', no clear criteria for 'interested'."
           }
         },
         stringMatching: {
           title: "4. Using Text Matching for Filters",
-          description: "When filtering by text fields like email, location, or product names, be clear about what you're looking for.",
+          description: "When filtering by text fields like lead sources, enriched profile data, or brand interactions, be clear about what you're looking for.",
           guidelines: "Guidelines:",
           rules: [
-            "Specify when you want exact matches vs. partial matches",
-            "For email filtering, mention the domain or provider you want",
-            "For locations, specify if you want cities, states, or regions",
-            "When referencing product names, be as specific as possible"
+            "Specify the exact field names or data sources when known",
+            "For lead data, mention the specific brand or campaign source",
+            "For enriched fields, reference the exact attribute (purchase intent, vehicle preference, etc.)",
+            "When filtering by brand interactions, specify the channel (email, web, dealership, campaigns)"
           ],
           goodExample: {
             title: "Good Text Matching Prompt",
-            prompt: "Create a segment of users with Gmail or Hotmail email addresses who bought the 200g jar of Nescafé Clásico and live in or around Guadalajara.",
-            explanation: "Clear intent about email domains, specific product with size, flexible location matching ('in or around'). The agent can interpret 'Gmail' as matching '@gmail.com' and 'around Guadalajara' as the metro area."
+            prompt: "Create a segment of leads from the 'Dodge Hornet Launch' campaign who have a phone number on file AND have a purchase intent of 'high' or 'very high' in their enriched profile data AND own a vehicle older than 5 years.",
+            explanation: "Clear campaign source specified, references specific enriched fields (phone number, purchase intent, vehicle age), explicit values for filtering."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Find people with emails and who bought coffee products in some big cities.",
-            explanation: "No specific email criteria, vague product reference ('coffee products'), undefined cities."
+            prompt: "Find leads who have contact info and seem ready to buy a car.",
+            explanation: "Vague 'contact info', subjective term 'seem ready to buy', no reference to actual data fields or enrichment attributes."
           }
         },
         insights: {
-          title: "5. Requesting Segment Insights",
-          description: "When analyzing existing segments, be specific about what insights you need.",
+          title: "5. Requesting Segment Insights & Visualizations",
+          description: "When analyzing data or requesting visualizations, specify the exact chart type, metrics, and time period.",
           tips: "Effective Insight Requests:",
           points: [
-            "Specify the metrics you want to analyze",
-            "Define comparison groups if needed",
+            "Specify the visualization type (bar chart, pie chart, table, etc.)",
+            "Define the exact metrics or data points for each axis",
             "Set clear timeframes for analysis",
-            "Ask for actionable recommendations"
+            "Request comparisons or breakdowns when relevant"
           ],
           goodExample: {
             title: "Good Insight Prompt",
-            prompt: "Analyze the 'High-Value Coffee Buyers' segment and provide:\n1. Average purchase frequency in the last 90 days\n2. Most popular products within this segment\n3. Geographic distribution across Mexico\n4. Comparison with overall customer base\n5. Recommendations for targeted campaigns",
-            explanation: "Specific metrics requested, clear timeframe, structured format, asks for actionable insights."
+            prompt: "Create a bar chart showing the number of test drive requests for Jeep vehicles over the last 12 months. Each bar should represent one month on the X-axis, with the count of test drive requests on the Y-axis. Break down by model (Wrangler, Grand Cherokee, Compass) using stacked bars. Order chronologically from oldest to newest.",
+            explanation: "Specific chart type, clear metric (test drive requests), defined timeframe (12 months), explicit axis definitions, breakdown by model, chronological ordering specified."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Tell me about the coffee segment and what we should know.",
-            explanation: "No specific metrics, no timeframe, too vague, unclear what information is needed."
+            prompt: "Show me test drive data for Jeep in a chart.",
+            explanation: "No specific chart type, no timeframe, no model breakdown, no axis or ordering specifications."
           }
         },
         quickReference: {
@@ -300,7 +315,7 @@ const AudienceAgentHandbook = () => {
         quiz: {
           title: "Test Your Prompt Skills",
           subtitle: "Enter a prompt below and get instant feedback on its quality",
-          placeholder: "Example: Create a segment of users who purchased Nescafé in the last 30 days...",
+          placeholder: "Example: Create a segment of customers who requested a Jeep test drive in the last 30 days...",
           buttonText: "Analyze Prompt",
           analyzing: "Analyzing...",
           scoreLabel: "Prompt Quality Score",
@@ -313,313 +328,313 @@ const AudienceAgentHandbook = () => {
       },
       footer: "For any support contact Tushar - Forward Deployed Engineering"
     },
-    es: {
-      title: "Guía de Prompts para el Agente de Audiencias",
-      subtitle: "Mejores Prácticas para Creación y Análisis de Segmentos",
-      company: "Nestlé México",
+    fr: {
+      title: "Guide de Prompts pour l'Agent d'Audience",
+      subtitle: "Meilleures Pratiques pour la Création et l'Analyse de Segments",
+      company: "",
       toggle: "English",
       toc: {
-        title: "Tabla de Contenidos",
+        title: "Table des Matières",
         items: [
-          { id: 'intro', label: 'Introducción' },
-          { id: 'section1', label: '1. Comenzar Simple' },
-          { id: 'section2', label: '2. Agregar Reglas' },
-          { id: 'section3', label: '3. Reglas Complejas' },
-          { id: 'section4', label: '4. Coincidencia de Texto' },
+          { id: 'intro', label: 'Introduction' },
+          { id: 'section1', label: '1. Commencer Simple' },
+          { id: 'section2', label: '2. Ajouter des Règles' },
+          { id: 'section3', label: '3. Règles Complexes' },
+          { id: 'section4', label: '4. Correspondance de Texte' },
           { id: 'section5', label: '5. Insights' },
-          { id: 'quickref', label: 'Referencia Rápida' },
-          { id: 'quiz', label: 'Prueba tus Habilidades' }
+          { id: 'quickref', label: 'Référence Rapide' },
+          { id: 'quiz', label: 'Testez vos Compétences' }
         ]
       },
       sections: {
         intro: {
-          title: "Introducción",
-          text: "El Agente de Audiencias es una herramienta poderosa para analizar segmentos de datos de usuarios y crear nuevos segmentos específicos. Esta guía te ayudará a crear prompts efectivos para maximizar sus capacidades."
+          title: "Introduction",
+          text: "L'Agent d'Audience est un outil puissant pour analyser les segments de données utilisateurs et créer de nouveaux segments ciblés. Ce guide vous aidera à créer des prompts efficaces pour maximiser ses capacités."
         },
         startSmall: {
-          title: "1. Comienza con Reglas de Segmento Simples",
-          description: "Comienza con segmentos básicos de una sola condición antes de agregar complejidad.",
-          why: "Por qué es importante:",
+          title: "1. Commencez avec des Règles de Segment Simples",
+          description: "Commencez par des segments basiques à condition unique avant d'ajouter de la complexité.",
+          why: "Pourquoi c'est important :",
           reasons: [
-            "Más fácil validar resultados y entender el comportamiento del segmento",
-            "Procesamiento más rápido y perspectivas más claras",
-            "Proporciona una base sólida para refinamiento iterativo"
+            "Plus facile de valider les résultats et comprendre le comportement du segment",
+            "Traitement plus rapide et insights plus clairs",
+            "Fournit une base solide pour l'amélioration itérative"
           ],
           goodExample: {
-            title: "Ejemplo de Buen Prompt",
-            prompt: "Crea un segmento de usuarios que compraron productos Nescafé en los últimos 30 días.",
-            explanation: "Claro, marco temporal específico, una categoría de producto, una condición."
+            title: "Exemple de Bon Prompt",
+            prompt: "Créez un segment de clients qui possèdent actuellement un véhicule Jeep et ont indiqué un intérêt pour les véhicules électriques, basé sur leurs données de profil.",
+            explanation: "Critères clairs ciblant des attributs spécifiques de propriété de véhicule et d'intérêt. Condition logique simple avec deux champs de profil liés."
           },
           badExample: {
-            title: "Evita Este Enfoque",
-            prompt: "Muéstrame a todos los que podrían estar interesados en café o compraron algo recientemente o visitaron el sitio web.",
-            explanation: "Demasiado vago, múltiples condiciones poco claras, sin criterios específicos."
+            title: "Évitez Cette Approche",
+            prompt: "Montrez-moi tous ceux qui pourraient être intéressés par les voitures ou semblent vouloir un nouveau véhicule.",
+            explanation: "Trop vague, conditions multiples peu claires, utilise un langage incertain comme 'pourraient être' et 'semblent'."
           }
         },
         addRules: {
-          title: "2. Agrega Reglas Incrementalmente",
-          description: "Una vez que tu segmento básico funcione, añade condiciones adicionales estratégicamente.",
-          approach: "Enfoque Recomendado:",
+          title: "2. Ajoutez des Règles Progressivement",
+          description: "Une fois votre segment de base fonctionnel, ajoutez des conditions supplémentaires stratégiquement.",
+          approach: "Approche Recommandée :",
           steps: [
-            "Comienza con tus criterios fundamentales",
-            "Prueba y verifica el segmento inicial",
-            "Agrega una regla adicional a la vez",
-            "Valida después de cada adición para rastrear el impacto"
+            "Commencez avec vos critères fondamentaux",
+            "Testez et vérifiez le segment initial",
+            "Ajoutez une règle supplémentaire à la fois",
+            "Validez après chaque ajout pour suivre l'impact"
           ],
           goodExample: {
-            title: "Buen Prompt Progresivo",
-            prompt: "Refina el segmento de compradores de Nescafé para incluir solo usuarios que: (1) hicieron una compra en los últimos 30 días, Y (2) han gastado más de $500 MXN en total, Y (3) están ubicados en Ciudad de México.",
-            explanation: "Progresión clara, condiciones numeradas, relación Y lógica."
+            title: "Bon Prompt Progressif",
+            prompt: "Créez un segment de prospects à forte intention pour les camions Ram où les utilisateurs remplissent TOUS ces critères : (1) ont visité le configurateur de camions Ram dans les 30 derniers jours, ET (2) ont ouvert ou cliqué sur des emails de promotions camions dans les 30 derniers jours, ET (3) ont demandé un essai routier ou un devis concessionnaire.",
+            explanation: "Progression claire, conditions numérotées, relation ET explicite, délais spécifiques, définit 'forte intention' avec des critères mesurables."
           },
           badExample: {
-            title: "Evita Este Enfoque",
-            prompt: "Agrega más filtros para encontrar mejores clientes que compren más y sean valiosos.",
-            explanation: "Sin criterios específicos, calificadores vagos, no está claro qué significa 'mejores'."
+            title: "Évitez Cette Approche",
+            prompt: "Trouvez les utilisateurs intéressés par les camions et actifs récemment.",
+            explanation: "Pas de critères spécifiques pour 'intéressés' ou 'actifs', pas de délais, qualificatifs vagues."
           }
         },
         complexRules: {
-          title: "3. Manejo de Múltiples Condiciones (Lógica Y/O)",
-          description: "Cuando tu segmento requiere lógica compleja, estructura tu prompt claramente.",
-          bestPractices: "Mejores Prácticas:",
+          title: "3. Gestion des Conditions Multiples (Logique ET/OU)",
+          description: "Lorsque votre segment nécessite une logique complexe, structurez votre prompt clairement.",
+          bestPractices: "Meilleures Pratiques :",
           tips: [
-            "Declara explícitamente las relaciones Y/O",
-            "Usa listas numeradas para múltiples condiciones",
-            "Agrupa condiciones relacionadas con paréntesis",
-            "Sé específico sobre la precedencia al mezclar Y/O"
+            "Déclarez explicitement les relations ET/OU",
+            "Utilisez des listes numérotées pour les conditions multiples",
+            "Groupez les conditions liées avec des parenthèses",
+            "Soyez précis sur la priorité lors du mélange ET/OU"
           ],
           goodExample: {
-            title: "Buen Prompt Complejo",
-            prompt: "Crea un segmento donde los usuarios cumplan TODOS estos criterios:\n1. Compraron (Nescafé O KitKat O Maggi) en los últimos 60 días\n2. Gasto total acumulado > $1000 MXN\n3. Ubicados en (CDMX O Guadalajara O Monterrey)\n4. Edad entre 25-45 años",
-            explanation: "Estructura clara, operadores Y/O explícitos, condiciones organizadas, valores específicos."
+            title: "Bon Prompt Complexe",
+            prompt: "Créez un segment d'audience de clients intéressés par les véhicules électriques où les utilisateurs remplissent N'IMPORTE LEQUEL de ces critères :\n1. Ont indiqué posséder un hybride ou VE dans leur profil, OU\n2. Ont visité les pages Jeep 4xe ou Fiat 500e sur le site web, OU\n3. Ont sélectionné 'durabilité' ou 'VE' dans leurs réponses au sondage 'Préférences Véhicule'.\nET tous les utilisateurs doivent être à moins de 80 km d'un concessionnaire Stellantis.",
+            explanation: "Structure claire avec conditions OU explicites groupées, condition ET finale clairement séparée, référence des sources de données spécifiques (profil, visites web, sondage)."
           },
           badExample: {
-            title: "Evita Este Enfoque",
-            prompt: "Obtén usuarios que compraron Nescafé o tal vez KitKat y gastaron dinero y viven en ciudades grandes o tienen la edad correcta.",
-            explanation: "Lógica ambigua, relaciones Y/O poco claras, cantidades vagas."
+            title: "Évitez Cette Approche",
+            prompt: "Trouvez les personnes qui aiment les voitures électriques ou pourraient être intéressées par les véhicules écologiques.",
+            explanation: "Logique ambiguë, sources de données peu claires, utilise un langage incertain comme 'pourraient être', pas de critères clairs pour 'intéressés'."
           }
         },
         stringMatching: {
-          title: "4. Uso de Coincidencia de Texto para Filtros",
-          description: "Al filtrar por campos de texto como correo, ubicación o nombres de productos, sé claro sobre lo que buscas.",
-          guidelines: "Lineamientos:",
+          title: "4. Utilisation de la Correspondance de Texte pour les Filtres",
+          description: "Lors du filtrage par champs de texte comme les sources de leads, données de profil enrichies ou interactions de marque, soyez clair sur ce que vous recherchez.",
+          guidelines: "Directives :",
           rules: [
-            "Especifica cuándo quieres coincidencias exactas vs. parciales",
-            "Para filtrado de correo, menciona el dominio o proveedor que deseas",
-            "Para ubicaciones, especifica si quieres ciudades, estados o regiones",
-            "Al referenciar nombres de productos, sé lo más específico posible"
+            "Spécifiez les noms exacts des champs ou sources de données lorsque vous les connaissez",
+            "Pour les données de leads, mentionnez la marque ou source de campagne spécifique",
+            "Pour les champs enrichis, référencez l'attribut exact (intention d'achat, préférence véhicule, etc.)",
+            "Lors du filtrage par interactions de marque, spécifiez le canal (email, web, concessionnaire, campagnes)"
           ],
           goodExample: {
-            title: "Buen Prompt de Coincidencia de Texto",
-            prompt: "Crea un segmento de usuarios con direcciones de correo de Gmail o Hotmail que compraron el frasco de 200g de Nescafé Clásico y viven en Guadalajara o sus alrededores.",
-            explanation: "Intención clara sobre dominios de correo, producto específico con tamaño, coincidencia de ubicación flexible ('en o sus alrededores'). El agente puede interpretar 'Gmail' como '@gmail.com' y 'alrededores de Guadalajara' como el área metropolitana."
+            title: "Bon Prompt de Correspondance de Texte",
+            prompt: "Créez un segment de leads de la campagne 'Lancement Dodge Hornet' qui ont un numéro de téléphone enregistré ET ont une intention d'achat 'élevée' ou 'très élevée' dans leurs données de profil enrichies ET possèdent un véhicule de plus de 5 ans.",
+            explanation: "Source de campagne claire spécifiée, référence des champs enrichis spécifiques (numéro de téléphone, intention d'achat, âge du véhicule), valeurs explicites pour le filtrage."
           },
           badExample: {
-            title: "Evita Este Enfoque",
-            prompt: "Encuentra personas con correos y que compraron productos de café en algunas ciudades grandes.",
-            explanation: "Sin criterios específicos de correo, referencia vaga de producto ('productos de café'), ciudades indefinidas."
+            title: "Évitez Cette Approche",
+            prompt: "Trouvez les leads qui ont des informations de contact et semblent prêts à acheter une voiture.",
+            explanation: "'Informations de contact' vague, terme subjectif 'semblent prêts à acheter', pas de référence aux champs de données réels ou attributs d'enrichissement."
           }
         },
         insights: {
-          title: "5. Solicitar Insights de Segmentos",
-          description: "Al analizar segmentos existentes, sé específico sobre qué insights necesitas.",
-          tips: "Solicitudes Efectivas de Insights:",
+          title: "5. Demander des Insights et Visualisations de Segments",
+          description: "Lors de l'analyse de données ou de demandes de visualisations, spécifiez le type exact de graphique, les métriques et la période.",
+          tips: "Demandes d'Insights Efficaces :",
           points: [
-            "Especifica las métricas que quieres analizar",
-            "Define grupos de comparación si es necesario",
-            "Establece marcos temporales claros para el análisis",
-            "Solicita recomendaciones accionables"
+            "Spécifiez le type de visualisation (graphique à barres, camembert, tableau, etc.)",
+            "Définissez les métriques ou points de données exacts pour chaque axe",
+            "Établissez des délais clairs pour l'analyse",
+            "Demandez des comparaisons ou ventilations lorsque pertinent"
           ],
           goodExample: {
-            title: "Buen Prompt de Insight",
-            prompt: "Analiza el segmento 'Compradores de Café de Alto Valor' y proporciona:\n1. Frecuencia promedio de compra en los últimos 90 días\n2. Productos más populares dentro de este segmento\n3. Distribución geográfica en México\n4. Comparación con la base general de clientes\n5. Recomendaciones para campañas dirigidas",
-            explanation: "Métricas específicas solicitadas, marco temporal claro, formato estructurado, solicita insights accionables."
+            title: "Bon Prompt d'Insight",
+            prompt: "Créez un graphique à barres montrant le nombre de demandes d'essai routier pour les véhicules Jeep sur les 12 derniers mois. Chaque barre doit représenter un mois sur l'axe X, avec le nombre de demandes d'essai routier sur l'axe Y. Ventiler par modèle (Wrangler, Grand Cherokee, Compass) en utilisant des barres empilées. Ordonner chronologiquement du plus ancien au plus récent.",
+            explanation: "Type de graphique spécifique, métrique claire (demandes d'essai routier), délai défini (12 mois), définitions d'axes explicites, ventilation par modèle, ordre chronologique spécifié."
           },
           badExample: {
-            title: "Evita Este Enfoque",
-            prompt: "Dime sobre el segmento de café y qué deberíamos saber.",
-            explanation: "Sin métricas específicas, sin marco temporal, demasiado vago, no está claro qué información se necesita."
+            title: "Évitez Cette Approche",
+            prompt: "Montrez-moi les données d'essais routiers Jeep dans un graphique.",
+            explanation: "Pas de type de graphique spécifique, pas de délai, pas de ventilation par modèle, pas de spécifications d'axes ou d'ordre."
           }
         },
         quickReference: {
-          title: "Referencia Rápida: Plantilla de Estructura de Prompt",
+          title: "Référence Rapide : Modèle de Structure de Prompt",
           template: [
-            "Declara tu objetivo claramente (crear segmento / analizar segmento)",
-            "Define criterios centrales con operadores explícitos (Y/O/CONTIENE/IGUAL)",
-            "Usa listas numeradas para múltiples condiciones",
-            "Especifica umbrales cuantitativos con precisión",
-            "Incluye marcos temporales donde sea relevante",
-            "Para insights: enumera métricas específicas necesarias"
+            "Énoncez clairement votre objectif (créer segment / analyser segment)",
+            "Définissez les critères principaux avec des opérateurs explicites (ET/OU/CONTIENT/ÉGAL)",
+            "Utilisez des listes numérotées pour les conditions multiples",
+            "Spécifiez les seuils quantitatifs avec précision",
+            "Incluez des délais lorsque pertinent",
+            "Pour les insights : listez les métriques spécifiques nécessaires"
           ]
         },
         quiz: {
-          title: "Prueba Tus Habilidades de Prompts",
-          subtitle: "Ingresa un prompt y recibe retroalimentación instantánea sobre su calidad",
-          placeholder: "Ejemplo: Crea un segmento de usuarios que compraron Nescafé en los últimos 30 días...",
-          buttonText: "Analizar Prompt",
-          analyzing: "Analizando...",
-          scoreLabel: "Puntuación de Calidad del Prompt",
-          strengthsLabel: "Fortalezas",
-          improvementsLabel: "Áreas de Mejora",
-          noStrengths: "No se detectaron fortalezas específicas. Intenta incluir objetivos claros, marcos temporales y criterios específicos.",
-          noImprovements: "¡Excelente prompt! No se necesitan mejoras importantes.",
-          tryAnother: "¡Prueba otro prompt para practicar!"
+          title: "Testez Vos Compétences en Prompts",
+          subtitle: "Entrez un prompt et recevez un retour instantané sur sa qualité",
+          placeholder: "Exemple : Créez un segment de clients qui ont demandé un essai routier Jeep dans les 30 derniers jours...",
+          buttonText: "Analyser le Prompt",
+          analyzing: "Analyse en cours...",
+          scoreLabel: "Score de Qualité du Prompt",
+          strengthsLabel: "Points Forts",
+          improvementsLabel: "Axes d'Amélioration",
+          noStrengths: "Aucun point fort spécifique détecté. Essayez d'inclure des objectifs clairs, des délais et des critères spécifiques.",
+          noImprovements: "Excellent prompt ! Aucune amélioration majeure nécessaire.",
+          tryAnother: "Essayez un autre prompt pour vous entraîner !"
         }
       },
-      footer: "Para cualquier soporte contacta a Tushar - Forward Deployed Engineering"
+      footer: "Pour tout support, contactez Tushar - Forward Deployed Engineering"
     },
-    ja: {
-      title: "オーディエンスエージェントプロンプトガイド",
-      subtitle: "セグメント作成と分析のベストプラクティス",
-      company: "ネスレ メキシコ",
-      toggle: "言語",
+    it: {
+      title: "Guida ai Prompt per l'Agente Audience",
+      subtitle: "Migliori Pratiche per la Creazione e l'Analisi di Segmenti",
+      company: "",
+      toggle: "English",
       toc: {
-        title: "目次",
+        title: "Indice",
         items: [
-          { id: 'intro', label: 'はじめに' },
-          { id: 'section1', label: '1. シンプルに始める' },
-          { id: 'section2', label: '2. ルールを追加' },
-          { id: 'section3', label: '3. 複雑なルール' },
-          { id: 'section4', label: '4. テキストマッチング' },
-          { id: 'section5', label: '5. インサイト' },
-          { id: 'quickref', label: 'クイックリファレンス' },
-          { id: 'quiz', label: 'スキルをテスト' }
+          { id: 'intro', label: 'Introduzione' },
+          { id: 'section1', label: '1. Inizia Semplice' },
+          { id: 'section2', label: '2. Aggiungi Regole' },
+          { id: 'section3', label: '3. Regole Complesse' },
+          { id: 'section4', label: '4. Corrispondenza Testo' },
+          { id: 'section5', label: '5. Insights' },
+          { id: 'quickref', label: 'Riferimento Rapido' },
+          { id: 'quiz', label: 'Testa le tue Competenze' }
         ]
       },
       sections: {
         intro: {
-          title: "はじめに",
-          text: "オーディエンスエージェントは、ユーザーデータセグメントを分析し、新しいターゲットセグメントを作成するための強力なツールです。このガイドは、その機能を最大限に活用するための効果的なプロンプトの作成方法を説明します。"
+          title: "Introduzione",
+          text: "L'Agente Audience è uno strumento potente per analizzare i segmenti di dati utente e creare nuovi segmenti mirati. Questa guida ti aiuterà a creare prompt efficaci per massimizzare le sue capacità."
         },
         startSmall: {
-          title: "1. シンプルなセグメントルールから始める",
-          description: "複雑さを追加する前に、基本的な単一条件のセグメントから始めましょう。",
-          why: "重要な理由：",
+          title: "1. Inizia con Regole di Segmento Semplici",
+          description: "Inizia con segmenti base a condizione singola prima di aggiungere complessità.",
+          why: "Perché è importante:",
           reasons: [
-            "結果の検証とセグメントの動作理解が容易",
-            "処理が高速で、より明確なインサイトが得られる",
-            "反復的な改善のための強固な基盤を提供"
+            "Più facile validare i risultati e comprendere il comportamento del segmento",
+            "Elaborazione più veloce e insights più chiari",
+            "Fornisce una base solida per il miglioramento iterativo"
           ],
           goodExample: {
-            title: "良いプロンプトの例",
-            prompt: "過去30日間にネスカフェ製品を購入したユーザーのセグメントを作成してください。",
-            explanation: "明確で、具体的な期間、単一の製品カテゴリー、1つの条件。"
+            title: "Esempio di Buon Prompt",
+            prompt: "Crea un segmento di clienti che attualmente possiedono un veicolo Jeep e hanno indicato interesse per i veicoli elettrici, basandosi sui loro dati di profilo.",
+            explanation: "Criteri chiari mirati ad attributi specifici di proprietà veicolo e interesse. Condizione logica semplice con due campi di profilo correlati."
           },
           badExample: {
-            title: "避けるべきアプローチ",
-            prompt: "コーヒーに興味があるかもしれない人、最近何か購入した人、またはウェブサイトを訪問した人を表示してください。",
-            explanation: "曖昧すぎる、複数の不明確な条件、具体的な基準がない。"
+            title: "Evita Questo Approccio",
+            prompt: "Mostrami tutti quelli che potrebbero essere interessati alle auto o sembrano volere un nuovo veicolo.",
+            explanation: "Troppo vago, condizioni multiple poco chiare, usa linguaggio incerto come 'potrebbero essere' e 'sembrano'."
           }
         },
         addRules: {
-          title: "2. 段階的にルールを追加",
-          description: "基本的なセグメントが機能したら、戦略的に追加条件をレイヤー化します。",
-          approach: "推奨されるアプローチ：",
+          title: "2. Aggiungi Regole Progressivamente",
+          description: "Una volta che il tuo segmento base funziona, aggiungi condizioni aggiuntive strategicamente.",
+          approach: "Approccio Consigliato:",
           steps: [
-            "コアとなる定義基準から始める",
-            "初期セグメントをテストして検証",
-            "一度に1つの追加ルールを追加",
-            "各追加後に検証して影響を追跡"
+            "Inizia con i tuoi criteri fondamentali",
+            "Testa e verifica il segmento iniziale",
+            "Aggiungi una regola aggiuntiva alla volta",
+            "Valida dopo ogni aggiunta per monitorare l'impatto"
           ],
           goodExample: {
-            title: "良い段階的プロンプト",
-            prompt: "ネスカフェ購入者セグメントを改良して、次の条件をすべて満たすユーザーのみを含めます：(1) 過去30日間に購入、かつ (2) 合計$500 MXN以上を支出、かつ (3) メキシコシティに所在。",
-            explanation: "明確な進行、番号付き条件、論理的なAND関係。"
+            title: "Buon Prompt Progressivo",
+            prompt: "Crea un segmento di prospect ad alta intenzione per i camion Ram dove gli utenti soddisfano TUTTI questi criteri: (1) hanno visitato la pagina del configuratore camion Ram negli ultimi 30 giorni, E (2) hanno aperto o cliccato email sulle promozioni camion negli ultimi 30 giorni, E (3) hanno richiesto un test drive o preventivo concessionaria.",
+            explanation: "Progressione chiara, condizioni numerate, relazione E esplicita, tempistiche specifiche, definisce 'alta intenzione' con criteri misurabili."
           },
           badExample: {
-            title: "避けるべきアプローチ",
-            prompt: "より多く購入し、価値のある優良顧客を見つけるために、さらにフィルターを追加してください。",
-            explanation: "具体的な基準がない、曖昧な修飾語、「優良」の意味が不明確。"
+            title: "Evita Questo Approccio",
+            prompt: "Trova gli utenti interessati ai camion e attivi di recente.",
+            explanation: "Nessun criterio specifico per 'interessati' o 'attivi', nessuna tempistica, qualificatori vaghi."
           }
         },
         complexRules: {
-          title: "3. 複数条件の処理（AND/ORロジック）",
-          description: "セグメントに複雑なロジックが必要な場合は、プロンプトを明確に構造化します。",
-          bestPractices: "ベストプラクティス：",
+          title: "3. Gestione di Condizioni Multiple (Logica E/O)",
+          description: "Quando il tuo segmento richiede logica complessa, struttura il tuo prompt chiaramente.",
+          bestPractices: "Migliori Pratiche:",
           tips: [
-            "AND/OR関係を明示的に記述",
-            "複数の条件には番号付きリストを使用",
-            "関連する条件は括弧でグループ化",
-            "AND/ORを混在させる際は優先順位を明確に"
+            "Dichiara esplicitamente le relazioni E/O",
+            "Usa liste numerate per condizioni multiple",
+            "Raggruppa le condizioni correlate con parentesi",
+            "Sii preciso sulla precedenza quando mescoli E/O"
           ],
           goodExample: {
-            title: "良い複雑なプロンプト",
-            prompt: "次のすべての基準を満たすユーザーのセグメントを作成：\n1. 過去60日間に（ネスカフェ または キットカット または マギー）を購入\n2. 生涯合計支出 > $1000 MXN\n3. （CDMX または グアダラハラ または モンテレー）に所在\n4. 年齢25〜45歳",
-            explanation: "明確な構造、明示的なAND/OR演算子、整理された条件、具体的な値。"
+            title: "Buon Prompt Complesso",
+            prompt: "Crea un segmento audience di clienti interessati ai veicoli elettrici dove gli utenti soddisfano QUALSIASI di questi criteri:\n1. Hanno indicato di possedere un ibrido o VE nel loro profilo, O\n2. Hanno visitato le pagine Jeep 4xe o Fiat 500e sul sito web, O\n3. Hanno selezionato 'sostenibilità' o 'VE' nelle risposte al sondaggio 'Preferenze Veicolo'.\nE tutti gli utenti devono essere entro 80 km da una concessionaria Stellantis.",
+            explanation: "Struttura chiara con condizioni O esplicite raggruppate, condizione E finale chiaramente separata, riferimento a fonti dati specifiche (profilo, visite web, sondaggio)."
           },
           badExample: {
-            title: "避けるべきアプローチ",
-            prompt: "ネスカフェまたは多分キットカットを購入し、お金を使い、大都市に住んでいるか適切な年齢のユーザーを取得してください。",
-            explanation: "曖昧なロジック、不明確なAND/OR関係、曖昧な数量。"
+            title: "Evita Questo Approccio",
+            prompt: "Trova le persone a cui piacciono le auto elettriche o potrebbero essere interessate ai veicoli ecologici.",
+            explanation: "Logica ambigua, fonti dati poco chiare, usa linguaggio incerto come 'potrebbero essere', nessun criterio chiaro per 'interessati'."
           }
         },
         stringMatching: {
-          title: "4. フィルターのテキストマッチング使用",
-          description: "メール、場所、製品名などのテキストフィールドでフィルタリングする場合は、探しているものを明確にします。",
-          guidelines: "ガイドライン：",
+          title: "4. Utilizzo della Corrispondenza Testo per i Filtri",
+          description: "Quando filtri per campi di testo come fonti lead, dati di profilo arricchiti o interazioni con il brand, sii chiaro su cosa stai cercando.",
+          guidelines: "Linee Guida:",
           rules: [
-            "完全一致と部分一致のどちらが必要かを指定",
-            "メールフィルタリングの場合、ドメインまたはプロバイダーを記載",
-            "場所の場合、都市、州、地域のどれが必要かを指定",
-            "製品名を参照する場合は、できるだけ具体的に"
+            "Specifica i nomi esatti dei campi o fonti dati quando li conosci",
+            "Per i dati lead, menziona il brand o la fonte campagna specifica",
+            "Per i campi arricchiti, fai riferimento all'attributo esatto (intenzione d'acquisto, preferenza veicolo, ecc.)",
+            "Quando filtri per interazioni brand, specifica il canale (email, web, concessionaria, campagne)"
           ],
           goodExample: {
-            title: "良いテキストマッチングプロンプト",
-            prompt: "GmailまたはHotmailのメールアドレスを持ち、200gのネスカフェ クラシコを購入し、グアダラハラまたはその周辺に住むユーザーのセグメントを作成してください。",
-            explanation: "メールドメインについての明確な意図、サイズ付きの具体的な製品、柔軟な場所マッチング（「周辺」）。エージェントは「Gmail」を「@gmail.com」と、「グアダラハラ周辺」を都市圏として解釈できます。"
+            title: "Buon Prompt di Corrispondenza Testo",
+            prompt: "Crea un segmento di lead dalla campagna 'Lancio Dodge Hornet' che hanno un numero di telefono registrato E hanno un'intenzione d'acquisto 'alta' o 'molto alta' nei loro dati di profilo arricchiti E possiedono un veicolo con più di 5 anni.",
+            explanation: "Fonte campagna chiara specificata, riferimento a campi arricchiti specifici (numero di telefono, intenzione d'acquisto, età veicolo), valori espliciti per il filtraggio."
           },
           badExample: {
-            title: "避けるべきアプローチ",
-            prompt: "メールアドレスを持ち、いくつかの大都市でコーヒー製品を購入した人を見つけてください。",
-            explanation: "具体的なメール基準がない、曖昧な製品参照（「コーヒー製品」）、未定義の都市。"
+            title: "Evita Questo Approccio",
+            prompt: "Trova i lead che hanno informazioni di contatto e sembrano pronti a comprare un'auto.",
+            explanation: "'Informazioni di contatto' vago, termine soggettivo 'sembrano pronti a comprare', nessun riferimento a campi dati reali o attributi di arricchimento."
           }
         },
         insights: {
-          title: "5. セグメントインサイトのリクエスト",
-          description: "既存のセグメントを分析する際は、必要なインサイトについて具体的に記述します。",
-          tips: "効果的なインサイトリクエスト：",
+          title: "5. Richiedere Insights e Visualizzazioni dei Segmenti",
+          description: "Quando analizzi dati o richiedi visualizzazioni, specifica il tipo esatto di grafico, le metriche e il periodo di tempo.",
+          tips: "Richieste di Insights Efficaci:",
           points: [
-            "分析したいメトリクスを指定",
-            "必要に応じて比較グループを定義",
-            "分析の明確な期間を設定",
-            "実行可能な推奨事項を依頼"
+            "Specifica il tipo di visualizzazione (grafico a barre, torta, tabella, ecc.)",
+            "Definisci le metriche esatte o i punti dati per ogni asse",
+            "Stabilisci tempistiche chiare per l'analisi",
+            "Richiedi confronti o scomposizioni quando rilevante"
           ],
           goodExample: {
-            title: "良いインサイトプロンプト",
-            prompt: "「高価値コーヒー購入者」セグメントを分析し、次を提供してください：\n1. 過去90日間の平均購入頻度\n2. このセグメント内の最も人気のある製品\n3. メキシコ全体での地理的分布\n4. 全体的な顧客ベースとの比較\n5. ターゲットキャンペーンのための推奨事項",
-            explanation: "具体的なメトリクスが要求され、明確な期間、構造化された形式、実行可能なインサイトを求める。"
+            title: "Buon Prompt di Insight",
+            prompt: "Crea un grafico a barre che mostra il numero di richieste test drive per veicoli Jeep negli ultimi 12 mesi. Ogni barra deve rappresentare un mese sull'asse X, con il conteggio delle richieste test drive sull'asse Y. Scomporre per modello (Wrangler, Grand Cherokee, Compass) usando barre impilate. Ordinare cronologicamente dal più vecchio al più recente.",
+            explanation: "Tipo di grafico specifico, metrica chiara (richieste test drive), tempistica definita (12 mesi), definizioni assi esplicite, scomposizione per modello, ordine cronologico specificato."
           },
           badExample: {
-            title: "避けるべきアプローチ",
-            prompt: "コーヒーセグメントについて教えてください、そして私たちが知るべきことは何ですか。",
-            explanation: "具体的なメトリクスがない、期間がない、曖昧すぎる、必要な情報が不明確。"
+            title: "Evita Questo Approccio",
+            prompt: "Mostrami i dati dei test drive Jeep in un grafico.",
+            explanation: "Nessun tipo di grafico specifico, nessuna tempistica, nessuna scomposizione per modello, nessuna specifica di assi o ordine."
           }
         },
         quickReference: {
-          title: "クイックリファレンス：プロンプト構造テンプレート",
+          title: "Riferimento Rapido: Modello di Struttura Prompt",
           template: [
-            "目的を明確に述べる（セグメント作成/セグメント分析）",
-            "明示的な演算子でコア基準を定義（AND/OR/CONTAINS/EQUALS）",
-            "複数条件には番号付きリストを使用",
-            "定量的閾値を正確に指定",
-            "関連する場合は期間を含める",
-            "インサイトの場合：必要な具体的メトリクスをリスト"
+            "Enuncia chiaramente il tuo obiettivo (crea segmento / analizza segmento)",
+            "Definisci i criteri principali con operatori espliciti (E/O/CONTIENE/UGUALE)",
+            "Usa liste numerate per condizioni multiple",
+            "Specifica le soglie quantitative con precisione",
+            "Includi tempistiche dove rilevante",
+            "Per gli insights: elenca le metriche specifiche necessarie"
           ]
         },
         quiz: {
-          title: "プロンプトスキルをテスト",
-          subtitle: "以下にプロンプトを入力して、品質に関する即座のフィードバックを取得",
-          placeholder: "例：過去30日間にネスカフェを購入したユーザーのセグメントを作成...",
-          buttonText: "プロンプトを分析",
-          analyzing: "分析中...",
-          scoreLabel: "プロンプト品質スコア",
-          strengthsLabel: "強み",
-          improvementsLabel: "改善領域",
-          noStrengths: "具体的な強みが検出されませんでした。明確な目的、期間、具体的な基準を含めてみてください。",
-          noImprovements: "素晴らしいプロンプトです！大きな改善は不要です。",
-          tryAnother: "練習のために別のプロンプトを試してみてください！"
+          title: "Testa le Tue Competenze sui Prompt",
+          subtitle: "Inserisci un prompt e ricevi feedback istantaneo sulla sua qualità",
+          placeholder: "Esempio: Crea un segmento di clienti che hanno richiesto un test drive Jeep negli ultimi 30 giorni...",
+          buttonText: "Analizza Prompt",
+          analyzing: "Analisi in corso...",
+          scoreLabel: "Punteggio Qualità Prompt",
+          strengthsLabel: "Punti di Forza",
+          improvementsLabel: "Aree di Miglioramento",
+          noStrengths: "Nessun punto di forza specifico rilevato. Prova a includere obiettivi chiari, tempistiche e criteri specifici.",
+          noImprovements: "Ottimo prompt! Nessun miglioramento importante necessario.",
+          tryAnother: "Prova un altro prompt per esercitarti!"
         }
       },
-      footer: "サポートが必要な場合は Tushar - Forward Deployed Engineering までご連絡ください"
+      footer: "Per qualsiasi supporto contatta Tushar - Forward Deployed Engineering"
     }
   };
 
@@ -641,40 +656,48 @@ const AudienceAgentHandbook = () => {
               {t.title}
             </h1>
           </div>
-          <div className="flex items-center gap-2">
-            <Globe size={18} className="text-slate-600" />
-            <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
-              <button
-                onClick={() => setLanguage('en')}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  language === 'en'
-                    ? 'bg-slate-900 text-white shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                EN
-              </button>
-              <button
-                onClick={() => setLanguage('es')}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  language === 'es'
-                    ? 'bg-slate-900 text-white shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                ES
-              </button>
-              <button
-                onClick={() => setLanguage('ja')}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                  language === 'ja'
-                    ? 'bg-slate-900 text-white shadow-sm'
-                    : 'text-slate-600 hover:text-slate-900'
-                }`}
-              >
-                日本語
-              </button>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Globe size={18} className="text-slate-600" />
+              <div className="flex gap-1 bg-slate-100 rounded-lg p-1">
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    language === 'en'
+                      ? 'bg-slate-900 text-white shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  EN
+                </button>
+                <button
+                  onClick={() => setLanguage('fr')}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    language === 'fr'
+                      ? 'bg-slate-900 text-white shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  FR
+                </button>
+                <button
+                  onClick={() => setLanguage('it')}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    language === 'it'
+                      ? 'bg-slate-900 text-white shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900'
+                  }`}
+                >
+                  IT
+                </button>
+              </div>
             </div>
+            <div className="h-8 w-px bg-slate-300"></div>
+            <img
+              src="/stellantis_logo.png"
+              alt="Stellantis"
+              className="h-20"
+            />
           </div>
         </div>
       </div>
@@ -682,10 +705,9 @@ const AudienceAgentHandbook = () => {
       {/* Subtitle Header */}
       <header className="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
         <div className="max-w-5xl mx-auto px-6 py-8">
-          <h2 className="text-2xl font-semibold mb-2">
+          <h2 className="text-2xl font-semibold">
             {t.subtitle}
           </h2>
-          <p className="text-blue-100">{t.company}</p>
         </div>
       </header>
 
