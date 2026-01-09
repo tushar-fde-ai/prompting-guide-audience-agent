@@ -162,7 +162,7 @@ const AudienceAgentHandbook = () => {
     en: {
       title: "Audience Agent Prompting Guide",
       subtitle: "Best Practices for Segment Creation & Analysis",
-      company: "Nestlé Mexico",
+      company: "Take-Two ",
       toggle: "Español",
       toc: {
         title: "Table of Contents",
@@ -193,12 +193,12 @@ const AudienceAgentHandbook = () => {
           ],
           goodExample: {
             title: "Good Prompt Example",
-            prompt: "Create a segment of users who purchased Nescafé products in the last 30 days.",
-            explanation: "Clear, specific timeframe, single product category, one condition."
+            prompt: "Create a segment of players who have played NBA 2K26 in the last 30 days.",
+            explanation: "Clear, specific timeframe, single game title, one condition."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Show me everyone who might be interested in coffee or bought something recently or visited the website.",
+            prompt: "Find me people who like basketball games or maybe played recently or visited the store page.",
             explanation: "Too vague, multiple unclear conditions, no specific criteria."
           }
         },
@@ -214,12 +214,12 @@ const AudienceAgentHandbook = () => {
           ],
           goodExample: {
             title: "Good Progressive Prompt",
-            prompt: "Refine the Nescafé purchasers segment to include only users who: (1) made a purchase in the last 30 days, AND (2) have spent more than $500 MXN total, AND (3) are located in Mexico City.",
+            prompt: "Refine the NBA 2K26 player segment to include only those who: (1) played in the last 30 days, AND (2) made $75 or more total purchases, AND (3) are located in the United States.",
             explanation: "Clear progression, numbered conditions, logical AND relationship."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Add more filters to find better customers who buy more and are valuable.",
+            prompt: "Add more filters to find better players who spend a lot of money and live in the right places.",
             explanation: "No specific criteria, vague qualifiers, unclear what 'better' means."
           }
         },
@@ -235,12 +235,12 @@ const AudienceAgentHandbook = () => {
           ],
           goodExample: {
             title: "Good Complex Prompt",
-            prompt: "Create a segment where users meet ALL of these criteria:\n1. Purchased (Nescafé OR KitKat OR Maggi) in last 60 days\n2. Total lifetime spend > $1000 MXN\n3. Located in (CDMX OR Guadalajara OR Monterrey)\n4. Age between 25-45 years",
+            prompt: "Create a segment where users meet ALL of these criteria:\n1. Played Title (NBA 2K26 OR WWE 2K25 OR PGA 2K25)\n2. Made a purchase within the last 90 days\n3. Located in (US OR CA OR BR)\n4. Recent Console Platform (Play Station 4 OR Play Station 5)",
             explanation: "Clear structure, explicit AND/OR operators, organized conditions, specific values."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Get users who bought Nescafé or maybe KitKat and spent money and live in major cities or are the right age.",
+            prompt: "Get players who bought NBA or maybe WWE lately and spent some money and live in the Americas or use a PlayStation.",
             explanation: "Ambiguous logic, unclear AND/OR relationships, vague quantities."
           }
         },
@@ -256,13 +256,13 @@ const AudienceAgentHandbook = () => {
           ],
           goodExample: {
             title: "Good Text Matching Prompt",
-            prompt: "Create a segment of users with Gmail or Hotmail email addresses who bought the 200g jar of Nescafé Clásico and live in or around Guadalajara.",
-            explanation: "Clear intent about email domains, specific product with size, flexible location matching ('in or around'). The agent can interpret 'Gmail' as matching '@gmail.com' and 'around Guadalajara' as the metro area."
+            prompt: "Create a segment of users with Gmail or Hotmail email addresses who played PGA2K25 and live in or around New York.",
+            explanation: "Clear intent about email domains, specific game description, flexible location matching ('in or around'). The agent can interpret 'Gmail' as matching '@gmail.com' and 'around New York' as the metro area."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Find people with emails and who bought coffee products in some big cities.",
-            explanation: "No specific email criteria, vague product reference ('coffee products'), undefined cities."
+            prompt: "Find me people with emails who play golf in some big cities.",
+            explanation: "No specific email criteria, vague game reference ('golf'), undefined cities."
           }
         },
         insights: {
@@ -277,12 +277,12 @@ const AudienceAgentHandbook = () => {
           ],
           goodExample: {
             title: "Good Insight Prompt",
-            prompt: "Analyze the 'High-Value Coffee Buyers' segment and provide:\n1. Average purchase frequency in the last 90 days\n2. Most popular products within this segment\n3. Geographic distribution across Mexico\n4. Comparison with overall customer base\n5. Recommendations for targeted campaigns",
+            prompt: "Analyze the 'Multi-Title Players - Recent Spenders - NA/BR - PlayStation' segment and provide:\n1. Average purchase frequency in the last 90 days\n2. Most popular games within this segment\n3. Geographic distribution accross USA\n4. Comparison with overall customer base\n5. Recommendations for targeted campaigns",
             explanation: "Specific metrics requested, clear timeframe, structured format, asks for actionable insights."
           },
           badExample: {
             title: "Avoid This Approach",
-            prompt: "Tell me about the coffee segment and what we should know.",
+            prompt: "Tell me about the Multi-Title Player segment and what we should know.",
             explanation: "No specific metrics, no timeframe, too vague, unclear what information is needed."
           }
         },
