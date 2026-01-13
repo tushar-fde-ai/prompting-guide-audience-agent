@@ -300,7 +300,7 @@ const AudienceAgentHandbook = () => {
         quiz: {
           title: "Test Your Prompt Skills",
           subtitle: "Enter a prompt below and get instant feedback on its quality",
-          placeholder: "Example: Create a segment of users who purchased Nescafé in the last 30 days...",
+          placeholder: "Example: Create a segment of players who have played NBA 2K26 in the last 30 days...",
           buttonText: "Analyze Prompt",
           analyzing: "Analyzing...",
           scoreLabel: "Prompt Quality Score",
